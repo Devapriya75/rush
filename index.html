@@ -1,0 +1,132 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=no">
+  <title>RUSH - 3-Lane Arcade Game</title>
+  <meta name="description" content="A simple, fast-paced 3-lane arcade browser game. Stay sharp, switch lanes, collect shapes, and avoid hazards.">
+  <!-- Modern Clean Typography -->
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+  <link href="https://fonts.googleapis.com/css2?family=Outfit:wght@400;600;700;800&family=Space+Grotesk:wght@500;700&display=swap" rel="stylesheet">
+  <link rel="stylesheet" href="style.css">
+</head>
+<body>
+
+  <!-- Main Game Container -->
+  <div class="game-container">
+    
+    <!-- Top Navigation Header -->
+    <header class="top-bar">
+      <div class="brand">
+        <span class="logo">RUSH</span>
+      </div>
+      <div class="top-controls">
+        <button id="soundToggleBtn" class="icon-btn" aria-label="Toggle Sound" title="Toggle Sound">
+          <svg id="soundIconOn" class="sound-icon" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
+            <polygon points="11 5 6 9 2 9 2 15 6 15 11 19 11 5"></polygon>
+            <path d="M19.07 4.93a10 10 0 0 1 0 14.14M15.54 8.46a5 5 0 0 1 0 7.07"></path>
+          </svg>
+          <svg id="soundIconOff" class="sound-icon hidden" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
+            <polygon points="11 5 6 9 2 9 2 15 6 15 11 19 11 5"></polygon>
+            <line x1="23" y1="9" x2="17" y2="15"></line>
+            <line x1="17" y1="9" x2="23" y2="15"></line>
+          </svg>
+        </button>
+      </div>
+    </header>
+
+    <!-- In-Game HUD -->
+    <div id="gameHud" class="hud-layer hidden">
+      <div class="hud-top">
+        <div class="hud-score-box">
+          <span class="hud-label">SCORE</span>
+          <span id="scoreDisplay" class="hud-val">0</span>
+        </div>
+        <div class="hud-combo-box">
+          <span id="comboDisplay" class="combo-badge">COMBO x1</span>
+        </div>
+      </div>
+      <div class="hud-bottom">
+        <div class="health-bar" id="healthDisplay" aria-label="Health">
+          <span class="heart active"></span>
+          <span class="heart active"></span>
+          <span class="heart active"></span>
+        </div>
+        <div id="shieldIndicator" class="shield-badge empty">
+          <span class="shield-dot"></span>
+          <span id="shieldText">SHIELD: EMPTY</span>
+        </div>
+      </div>
+    </div>
+
+    <!-- Canvas Game Viewport -->
+    <main class="canvas-wrapper">
+      <canvas id="gameCanvas" width="420" height="680"></canvas>
+
+      <!-- Start Screen Overlay -->
+      <section id="startScreen" class="overlay-screen active">
+        <div class="overlay-content">
+          <h1 class="game-title">RUSH</h1>
+          <p class="tagline">Stay sharp. Keep moving.</p>
+          
+          <button id="startBtn" class="btn btn-primary">START</button>
+
+          <div class="controls-hint">
+            <div class="key-group">
+              <kbd>←</kbd><kbd>→</kbd> or <kbd>A</kbd><kbd>D</kbd> to move
+            </div>
+            <div class="key-group sub-hint">
+              <kbd>SPACE</kbd> to start / pause
+            </div>
+          </div>
+        </div>
+      </section>
+
+      <!-- Game Over Screen Overlay -->
+      <section id="gameOverScreen" class="overlay-screen hidden">
+        <div class="overlay-content">
+          <h2 class="game-over-title">GAME OVER</h2>
+          
+          <div class="score-summary">
+            <div class="stat-card">
+              <span class="stat-label">SCORE</span>
+              <span id="finalScore" class="stat-value">0</span>
+            </div>
+            <div class="stat-card">
+              <span class="stat-label">BEST</span>
+              <span id="bestScore" class="stat-value">0</span>
+            </div>
+          </div>
+
+          <div id="newBestBadge" class="new-best-badge hidden">NEW HIGH SCORE!</div>
+
+          <button id="restartBtn" class="btn btn-primary">PLAY AGAIN</button>
+        </div>
+      </section>
+    </main>
+
+    <!-- Mobile Touch Controls -->
+    <footer class="touch-controls">
+      <button id="btnLeft" class="touch-btn" aria-label="Move Left">
+        <svg viewBox="0 0 24 24" width="28" height="28" fill="none" stroke="currentColor" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round">
+          <line x1="19" y1="12" x2="5" y2="12"></line>
+          <polyline points="12 19 5 12 12 5"></polyline>
+        </svg>
+        <span>LEFT</span>
+      </button>
+      <button id="btnRight" class="touch-btn" aria-label="Move Right">
+        <span>RIGHT</span>
+        <svg viewBox="0 0 24 24" width="28" height="28" fill="none" stroke="currentColor" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round">
+          <line x1="5" y1="12" x2="19" y2="12"></line>
+          <polyline points="12 5 19 12 12 19"></polyline>
+        </svg>
+      </button>
+    </footer>
+
+  </div>
+
+  <script src="js/audio.js"></script>
+  <script src="js/game.js"></script>
+</body>
+</html>

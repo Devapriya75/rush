@@ -1,0 +1,429 @@
+/* ==========================================================================
+   RUSH - 3-Lane Arcade Game Styling
+   ========================================================================== */
+
+:root {
+  --bg-color: #151515;
+  --arena-color: #1D1D1D;
+  --arena-border: #2D2D2D;
+  --primary-color: #22D3EE; /* Muted cyan */
+  --accent-color: #FACC15;  /* Warm yellow */
+  --danger-color: #EF4444;  /* Muted red */
+  --text-main: #F8FAFC;     /* Off-white */
+  --text-muted: #94A3B8;    /* Muted gray */
+  --card-bg: #242424;
+  --font-heading: 'Outfit', -apple-system, sans-serif;
+  --font-code: 'Space Grotesk', monospace;
+}
+
+* {
+  box-sizing: border-box;
+  margin: 0;
+  padding: 0;
+  user-select: none;
+  -webkit-user-select: none;
+  -webkit-touch-callout: none;
+}
+
+html, body {
+  width: 100%;
+  height: 100%;
+  overflow: hidden;
+  background-color: var(--bg-color);
+  color: var(--text-main);
+  font-family: var(--font-heading);
+  touch-action: manipulation;
+}
+
+/* Base Game Container */
+.game-container {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  justify-content: space-between;
+  width: 100vw;
+  height: 100vh;
+  max-width: 500px;
+  margin: 0 auto;
+  padding: 12px;
+  position: relative;
+}
+
+/* Top Header Bar */
+.top-bar {
+  width: 100%;
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  padding: 8px 12px;
+  z-index: 10;
+}
+
+.brand .logo {
+  font-size: 1.6rem;
+  font-weight: 800;
+  letter-spacing: 2px;
+  color: var(--text-main);
+}
+
+.top-controls {
+  display: flex;
+  gap: 8px;
+}
+
+.icon-btn {
+  background: var(--card-bg);
+  border: 1px solid var(--arena-border);
+  color: var(--text-main);
+  width: 40px;
+  height: 40px;
+  border-radius: 8px;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  cursor: pointer;
+  transition: background 0.15s ease, transform 0.1s ease;
+}
+
+.icon-btn:hover {
+  background: #333333;
+}
+
+.icon-btn:active {
+  transform: scale(0.95);
+}
+
+.sound-icon {
+  width: 20px;
+  height: 20px;
+}
+
+.hidden {
+  display: none !important;
+}
+
+/* HUD Overlay Layer */
+.hud-layer {
+  position: absolute;
+  top: 56px;
+  left: 20px;
+  right: 20px;
+  display: flex;
+  flex-direction: column;
+  gap: 8px;
+  z-index: 5;
+  pointer-events: none;
+}
+
+.hud-top {
+  display: flex;
+  justify-content: space-between;
+  align-items: baseline;
+}
+
+.hud-score-box {
+  display: flex;
+  align-items: baseline;
+  gap: 8px;
+}
+
+.hud-label {
+  font-family: var(--font-code);
+  font-size: 0.85rem;
+  font-weight: 700;
+  color: var(--text-muted);
+  letter-spacing: 1px;
+}
+
+.hud-val {
+  font-family: var(--font-code);
+  font-size: 1.5rem;
+  font-weight: 700;
+  color: var(--text-main);
+}
+
+.combo-badge {
+  font-family: var(--font-code);
+  font-size: 0.95rem;
+  font-weight: 700;
+  color: var(--accent-color);
+  background: rgba(250, 204, 21, 0.12);
+  padding: 4px 10px;
+  border-radius: 6px;
+  border: 1px solid rgba(250, 204, 21, 0.3);
+}
+
+.hud-bottom {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+}
+
+.health-bar {
+  display: flex;
+  gap: 6px;
+}
+
+.heart {
+  width: 14px;
+  height: 14px;
+  border-radius: 3px;
+  background-color: var(--arena-border);
+  transition: background-color 0.2s ease, transform 0.15s ease;
+}
+
+.heart.active {
+  background-color: var(--danger-color);
+}
+
+.shield-badge {
+  display: flex;
+  align-items: center;
+  gap: 6px;
+  font-family: var(--font-code);
+  font-size: 0.75rem;
+  font-weight: 700;
+  padding: 3px 8px;
+  border-radius: 4px;
+  transition: all 0.2s ease;
+}
+
+.shield-badge.ready {
+  color: var(--primary-color);
+  background: rgba(34, 211, 238, 0.12);
+  border: 1px solid rgba(34, 211, 238, 0.3);
+}
+
+.shield-badge.ready .shield-dot {
+  width: 8px;
+  height: 8px;
+  border-radius: 50%;
+  background-color: var(--primary-color);
+  box-shadow: 0 0 6px var(--primary-color);
+}
+
+.shield-badge.empty {
+  color: var(--text-muted);
+  background: rgba(255, 255, 255, 0.05);
+  border: 1px solid var(--arena-border);
+}
+
+.shield-badge.empty .shield-dot {
+  width: 8px;
+  height: 8px;
+  border-radius: 50%;
+  background-color: var(--text-muted);
+}
+
+/* Canvas Viewport */
+.canvas-wrapper {
+  position: relative;
+  flex: 1;
+  width: 100%;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  margin: 6px 0;
+  overflow: hidden;
+  border-radius: 12px;
+  border: 1px solid var(--arena-border);
+  background-color: var(--arena-color);
+}
+
+canvas {
+  width: 100%;
+  height: 100%;
+  object-fit: contain;
+  display: block;
+}
+
+/* Overlays (Start & Game Over Screens) */
+.overlay-screen {
+  position: absolute;
+  inset: 0;
+  background-color: rgba(21, 21, 21, 0.92);
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  z-index: 20;
+  padding: 24px;
+  text-align: center;
+  transition: opacity 0.2s ease;
+}
+
+.overlay-content {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  gap: 18px;
+  max-width: 320px;
+  width: 100%;
+}
+
+.game-title {
+  font-size: 3rem;
+  font-weight: 800;
+  letter-spacing: 4px;
+  color: var(--text-main);
+  margin-bottom: -4px;
+}
+
+.tagline {
+  color: var(--text-muted);
+  font-size: 0.95rem;
+  letter-spacing: 0.5px;
+}
+
+.btn {
+  font-family: var(--font-heading);
+  font-size: 1.1rem;
+  font-weight: 700;
+  letter-spacing: 1px;
+  padding: 14px 32px;
+  border-radius: 8px;
+  border: none;
+  cursor: pointer;
+  transition: background 0.15s ease, transform 0.1s ease;
+  width: 100%;
+}
+
+.btn-primary {
+  background-color: var(--primary-color);
+  color: #0A192F;
+}
+
+.btn-primary:hover {
+  background-color: #38BDF8;
+}
+
+.btn-primary:active {
+  transform: scale(0.97);
+}
+
+.controls-hint {
+  margin-top: 10px;
+  display: flex;
+  flex-direction: column;
+  gap: 8px;
+  color: var(--text-muted);
+  font-size: 0.85rem;
+}
+
+.key-group {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  gap: 4px;
+}
+
+.sub-hint {
+  font-size: 0.75rem;
+  opacity: 0.75;
+}
+
+kbd {
+  background: var(--card-bg);
+  border: 1px solid var(--arena-border);
+  border-radius: 4px;
+  padding: 2px 6px;
+  font-family: var(--font-code);
+  font-size: 0.75rem;
+  color: var(--text-main);
+}
+
+/* Game Over Overlay Specifics */
+.game-over-title {
+  font-size: 2rem;
+  font-weight: 800;
+  color: var(--danger-color);
+  letter-spacing: 2px;
+}
+
+.score-summary {
+  display: flex;
+  gap: 16px;
+  width: 100%;
+}
+
+.stat-card {
+  flex: 1;
+  background: var(--card-bg);
+  border: 1px solid var(--arena-border);
+  border-radius: 8px;
+  padding: 12px;
+  display: flex;
+  flex-direction: column;
+  gap: 4px;
+}
+
+.stat-label {
+  font-family: var(--font-code);
+  font-size: 0.75rem;
+  color: var(--text-muted);
+}
+
+.stat-value {
+  font-family: var(--font-code);
+  font-size: 1.6rem;
+  font-weight: 700;
+  color: var(--text-main);
+}
+
+.new-best-badge {
+  color: var(--accent-color);
+  font-family: var(--font-code);
+  font-size: 0.85rem;
+  font-weight: 700;
+  letter-spacing: 1px;
+  background: rgba(250, 204, 21, 0.12);
+  padding: 4px 12px;
+  border-radius: 20px;
+  border: 1px solid rgba(250, 204, 21, 0.3);
+}
+
+/* Mobile Touch Controls */
+.touch-controls {
+  width: 100%;
+  display: flex;
+  gap: 12px;
+  padding: 4px 0 8px 0;
+}
+
+.touch-btn {
+  flex: 1;
+  height: 60px;
+  background: var(--card-bg);
+  border: 1px solid var(--arena-border);
+  border-radius: 10px;
+  color: var(--text-main);
+  font-family: var(--font-heading);
+  font-weight: 700;
+  font-size: 1rem;
+  letter-spacing: 1px;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  gap: 8px;
+  cursor: pointer;
+  touch-action: manipulation;
+  transition: background 0.15s ease, border-color 0.15s ease, transform 0.08s ease;
+}
+
+.touch-btn:active {
+  background: #333333;
+  border-color: var(--primary-color);
+  transform: scale(0.97);
+}
+
+/* Responsiveness Adjustments */
+@media (max-width: 400px) {
+  .game-container {
+    padding: 8px;
+  }
+  .game-title {
+    font-size: 2.4rem;
+  }
+  .touch-btn {
+    height: 52px;
+  }
+}
